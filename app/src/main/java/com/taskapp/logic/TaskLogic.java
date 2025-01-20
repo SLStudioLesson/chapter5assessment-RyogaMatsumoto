@@ -120,7 +120,16 @@ public class TaskLogic {
             throw new AppException("ステータスは、前のステータスより1つ先のもののみを選択してください");
         }
 
-        // ステータスのみ更新
+        // ステータス更新
+        Task updateTask = new Task(code, task.getName(), status, loginUser);
+        taskDataAccess.update(updateTask);
+
+        // ログ更新
+        int changeUserCode = loginUser.getCode();
+        Log log = new Log(code, changeUserCode, status, LocalDate.now());
+        logDataAccess.save(log);
+        
+        System.out.println("ステータスの変更が完了しました。");
     }
 
     /**

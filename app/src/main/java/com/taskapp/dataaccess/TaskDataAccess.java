@@ -128,8 +128,22 @@ public class TaskDataAccess {
      * @param updateTask 更新するタスク
      */
     public void update(Task updateTask) {
-        try () {
+        List<Task> tasks = findAll();
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+        // CSVのヘッダーを書き込む
+        writer.write("Code,Name,Status,Rep_User_Code\n");
 
+        String line;
+        for (Task task : tasks) {
+            // 編集対象のTaskなら、updateTaskの情報を書き込む
+            if (task.getCode() == updateTask.getCode()) {
+                line = createLine(updateTask);
+            } else {
+                line = createLine(task);
+            }
+            writer.write(line);
+            writer.newLine();
+        }
         } catch (IOException e) {
             e.printStackTrace();
         }

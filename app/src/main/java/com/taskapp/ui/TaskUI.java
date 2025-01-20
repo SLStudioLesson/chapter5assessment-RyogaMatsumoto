@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import javax.print.DocFlavor.READER;
-
 import com.taskapp.exception.AppException;
 import com.taskapp.logic.TaskLogic;
 import com.taskapp.logic.UserLogic;
@@ -221,7 +219,7 @@ public class TaskUI {
                     System.out.println();
                     continue;
                 }
-                if (Integer.parseInt(status) != 1 || Integer.parseInt(status) != 2) {
+                if (Integer.parseInt(status) != 1 && Integer.parseInt(status) != 2) {
                     System.out.println("ステータスは1・2の中から選択してください");
                     System.out.println();
                     continue;
