@@ -121,14 +121,14 @@ public class TaskLogic {
         }
 
         // ステータス更新
-        Task updateTask = new Task(code, task.getName(), status, loginUser);
+        Task updateTask = new Task(code, task.getName(), status, task.getRepUser());
         taskDataAccess.update(updateTask);
 
         // ログ更新
         int changeUserCode = loginUser.getCode();
         Log log = new Log(code, changeUserCode, status, LocalDate.now());
         logDataAccess.save(log);
-        
+
         System.out.println("ステータスの変更が完了しました。");
     }
 

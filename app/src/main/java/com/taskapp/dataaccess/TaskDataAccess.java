@@ -59,7 +59,7 @@ public class TaskDataAccess {
 
                 // タスクを担当するユーザーの情報
                 User repUser = userDataAccess.findByCode(Integer.parseInt(values[3]));
-
+                
                 // Taskオブジェクトにマッピングしていく
                 Task task = new Task(code, name, status, repUser);
                 // tasksに追加する
@@ -131,7 +131,7 @@ public class TaskDataAccess {
         List<Task> tasks = findAll();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
         // CSVのヘッダーを書き込む
-        writer.write("Code,Name,Status,Rep_User_Code\n");
+        writer.write("Code,Name,Status,Rep_User_Code");
 
         String line;
         for (Task task : tasks) {
@@ -141,8 +141,8 @@ public class TaskDataAccess {
             } else {
                 line = createLine(task);
             }
-            writer.write(line);
             writer.newLine();
+            writer.write(line);
         }
         } catch (IOException e) {
             e.printStackTrace();
