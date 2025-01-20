@@ -1,8 +1,13 @@
 package com.taskapp.logic;
 
+import java.util.List;
+
 import com.taskapp.dataaccess.LogDataAccess;
 import com.taskapp.dataaccess.TaskDataAccess;
 import com.taskapp.dataaccess.UserDataAccess;
+import com.taskapp.exception.AppException;
+import com.taskapp.model.Task;
+import com.taskapp.model.User;
 
 public class TaskLogic {
     private final TaskDataAccess taskDataAccess;
@@ -34,8 +39,28 @@ public class TaskLogic {
      * @see com.taskapp.dataaccess.TaskDataAccess#findAll()
      * @param loginUser ログインユーザー
      */
-    // public void showAll(User loginUser) {
-    // }
+    public void showAll(User loginUser) {
+        List<Task> tasks = taskDataAccess.findAll();
+
+        tasks.forEach(t -> {
+            String tantou = "あなたが担当しています";
+            // ログインしているユーザーとタスクの担当者が違った場合担当者名を出力
+            User repUser = t.getRepUser();
+            if (loginUser.getCode() != repUser.getCode()) {
+                tantou = repUser.getName() + "が担当しています";
+            }
+
+            // タスクステータス
+            String statu = "未着手";
+            if (t.getStatus() == 1) {
+                statu = "着手中";
+            } else if (t.getStatus() == 2) {
+                statu = "完了";
+            }
+
+            System.out.println(t.getCode() + ". タスク名：" + t.getName() + ", 担当者名：" + tantou + ", ステータス：" + statu);
+        });
+    }
 
     /**
      * 新しいタスクを保存します。
@@ -49,9 +74,9 @@ public class TaskLogic {
      * @param loginUser ログインユーザー
      * @throws AppException ユーザーコードが存在しない場合にスローされます
      */
-    // public void save(int code, String name, int repUserCode,
-    //                 User loginUser) throws AppException {
-    // }
+    public void save(int code, String name, int repUserCode, User loginUser) throws AppException {
+        
+    }
 
     /**
      * タスクのステータスを変更します。
